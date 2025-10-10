@@ -244,9 +244,9 @@ erDiagram
 
 ##  🚧 Challenges
 
--   **Collaboration**
-    - Time and schedule constraints 
-    - Git merge conflicts
+- **Collaboration:** After two weeks working in the previous group, we were regrouped, so we had to adjust to new team dynamics and communication styles 
+- **Time Constraints:** Balancing remaining tasks from the previous group assignment while tackling the current assignment was challenging, but the regrouping helps us get used to working with different teammates
+- **Technical Struggles:** Experienced some difficulties with dbt, particularly when merging changes and pushing updates to the repository
  
 ## 💡 Instacart Business Questions
 
