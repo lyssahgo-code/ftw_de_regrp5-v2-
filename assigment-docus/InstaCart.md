@@ -466,33 +466,33 @@ We designed our dashboards to align with each stakeholder and their business que
 
 ### Key Insights
 
-🕒 1. Order Trends
+#### 🕒 1. Order Trends
 - Peak orders occur on **Sundays and Mondays**, mainly during **Morning** and **Afternoon**.
 - Minimal activity during **Midnight** and **Early Morning**.
 - Indicates **strong weekend and daytime demand**.
 ---
-🥑 2. Top Reordered Products
+#### 🥑 2. Top Reordered Products
 - Frequently reordered: **Bananas, Organic Bananas, Strawberries, Baby Spinach**.
 - Mostly **fresh produce** with **short reorder cycles**.
 - Suggests **stable weekly demand** for everyday grocery items.
 ---
-🧴 3. Least Reordered Products
+#### 🧴 3. Least Reordered Products
 - Items like **Cereal, Beer, and Cleaning Products** have very low reorder counts (1).
 - Average reorder interval: **30 days**.
 - Reflects **occasional or bulk purchases**.
 ---
-🧃 4. Departments & Aisles with Highest Reorder Rates
+#### 🧃 4. Departments & Aisles with Highest Reorder Rates
 - **Top Departments:** Dairy & Eggs, Beverages, Produce.  
 - **Top Aisles:** Milk, Sparkling Water, Fresh Fruits, Eggs.  
 - These drive **repeat purchases** and customer retention.
 ---
-🍌 5. Top-Selling Products
+#### 🍌 5. Top-Selling Products
 - **Bananas** remain the top seller, followed by **Organic Bananas** and **Strawberries**.
 - Key drivers of **sales volume** and **repeat orders**.
 
 ---
 
-### ✅ Recommendations by Stakeholder
+#### ✅ Recommendations by Stakeholder
 
 🏭 Operations / Logistics
 - Increase **staffing and delivery capacity** during **morning and weekend peaks**.
