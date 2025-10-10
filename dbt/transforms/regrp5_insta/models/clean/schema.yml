@@ -1,0 +1,67 @@
+version: 2
+
+models:
+
+  - name:                                #table name here
+    description: "Standardized _______ loaded from raw.raw___insta_aisles"
+    columns:
+      - name:                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          - accepted_values:
+              values: ['', '']           # use if column should only accept select values
+
+
+  - name:                                #table name here
+    description: "Standardized _______ loaded from raw.raw___departments"
+    columns:
+      - name:                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          - accepted_values:
+              values: ['', '']           # use if column should only accept select values     
+
+
+  - name:                                #table name here
+    description: "Standardized _______ loaded from raw.raw___insta_order_products_prior"
+    columns:
+      - name:                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          - accepted_values:
+              values: ['', '']           # use if column should only accept select values
+
+
+  - name:                                #table name here
+    description: "Standardized _______ loaded from raw.raw___insta_order_products_train"
+    columns:
+      - name:                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          - accepted_values:
+              values: ['', '']           # use if column should only accept select values        
+
+
+  - name:                                #table name here
+    description: "Standardized _______ loaded from raw.raw___insta_orders"
+    columns:
+      - name:                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          - accepted_values:
+              values: ['', '']           # use if column should only accept select values
+
+  - name:                                #table name here
+    description: "Standardized _______ loaded from raw.raw___insta_products"
+    columns:
+      - name:                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          - accepted_values:
+              values: ['', '']           # use if column should only accept select values

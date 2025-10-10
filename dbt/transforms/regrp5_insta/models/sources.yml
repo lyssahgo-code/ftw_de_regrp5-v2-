@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    database: raw  # Explicitly specify ClickHouse database
+    tables:
+      - name: raw___insta_aisles  # Must match EXACTLY (3 underscores)
+      - name: raw___insta_departments
+      - name: raw___insta_order_products_prior
+      - name: raw___insta_order_products_train
+      - name: raw___insta_orders
+      - name: raw___insta_products
+

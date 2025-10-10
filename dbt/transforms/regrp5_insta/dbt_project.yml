@@ -1,0 +1,19 @@
+name: 'regrp5_insta'
+version: '1.0.0'
+config-version: 2
+
+profile: 'regrp5_insta'
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+target-path: "target"
+log-path: "logs"
+
+models:
+  g1_oulad:
+    clean:
+      +schema: clean
+      +materialized: table
+    mart:
+      +schema: mart
+      +materialized: view
