@@ -1,6 +1,11 @@
-Instacart Market Basket Analysis
+<div align="center">
 
-Re:Group 5
+# Instacart Market Basket Analysis
+
+## Re: Group 5
+
+</div>
+
 
 ---
 
