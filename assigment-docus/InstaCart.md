@@ -239,6 +239,22 @@ erDiagram
     FACT_ORDER_PRODUCTS ||--o{ DIM_DEPARTMENTS : "department_id → DepartmentKey"
 
 ```
+## 🧩 Collaboration & Setup
+
+### **Task Splitting**
+
+- **Data Cleaning and Validation:** Prepared and standardized raw data by removing duplicates, fixing missing values, and verifying data types.  
+- **Data Quality and Testing:** Applied dbt tests to ensure data accuracy, completeness, and consistency.  
+- **Data Mart Development:** Built structured fact and dimension tables with proper keys for analysis.  
+- **Visualization and Analysis:** Created Metabase dashboards and validated insights against cleaned data.  
+- **Documentation:** Maintained schema diagrams and Git-based documentation for project tracking.  
+
+### **Shared vs Local Work**
+
+- **Shared Database:** A central ClickHouse instance provided a unified data source for all team members.  
+- **Local Development:** dbt models were built and tested locally, connecting to the shared database for execution and validation.  
+- **Version Control:** Git branching enabled collaborative development, code reviews, and controlled integration to the main branch.  
+- **Workflow Alignment:** Regular updates ensured schema consistency and smooth coordination across environments.  
 
 ---
 
