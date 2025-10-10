@@ -429,6 +429,24 @@ ORDER BY
 ---
 
 ## 📊 Sample Dashboards
+We designed our dashboards to align with each stakeholder and their business questions, with the **main objective of maximizing revenue**
+
+### 🚚 Operations / Logistics
+> To optimize during peak periods and target promotions during slow periods
+<img width="1386" height="688" alt="image" src="https://github.com/user-attachments/assets/68ec26fd-2181-48c7-9317-ec9cb301f5f7" />
+
+### 📦 Purchasing / Inventory
+> To identify top-selling products and ensure stock availability
+<img width="1372" height="704" alt="image" src="https://github.com/user-attachments/assets/67c1ab34-1c7b-4018-85ec-0c2fd32d25d0" />
+
+<img width="1356" height="711" alt="image" src="https://github.com/user-attachments/assets/db78f0dd-08e2-4360-831f-7d18f36dc660" />
+
+### 📣 Marketing
+> To identify opportunities for targeted promotions, product bundling, and top-selling products
+<img width="1375" height="650" alt="image" src="https://github.com/user-attachments/assets/341ee58c-03a9-420e-adad-c5a2a3f3dcea" />
+
+<img width="1109" height="815" alt="image" src="https://github.com/user-attachments/assets/fdcf36d0-d5d9-4207-900e-3c2eed256cea" />
+
 
 ### Key Insights
 
