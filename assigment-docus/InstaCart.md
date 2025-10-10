@@ -179,6 +179,9 @@ Goal is to design a star schema:
 
 ```mermaid
 erDiagram
+    direction TB
+
+    %% Fact Tables
     FACT_ORDERS {
         Int64 OrderKey PK
         Int64 user_id FK
@@ -196,6 +199,7 @@ erDiagram
         Bool reordered
     }
 
+    %% Dimension Tables
     DIM_USERS {
         Int64 UserKey PK
     }
@@ -228,6 +232,7 @@ erDiagram
     FACT_ORDER_PRODUCTS ||--o{ DIM_PRODUCTS : "product_id → ProductKey"
     FACT_ORDER_PRODUCTS ||--o{ DIM_AISLES : "aisle_id → AisleKey"
     FACT_ORDER_PRODUCTS ||--o{ DIM_DEPARTMENTS : "department_id → DepartmentKey"
+
 ```
 
 ---
