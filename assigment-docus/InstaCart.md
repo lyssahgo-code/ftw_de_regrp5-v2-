@@ -65,7 +65,8 @@ Transform the raw dataset into a dimensional star schema (fact and dimension tab
 - **Collaboration:** Git + GitHub
 
 ### Medallion Architecture
-- This exercise uses the same Medallion Architecture: the Raw → Clean → Mart table transformations. - The raw tables is the ingested dataset.
+- This exercise uses the same Medallion Architecture: the Raw → Clean → Mart table transformations.
+- The raw tables is the ingested dataset.
 - The clean tables are transformed from the clean tables through data typecasting, ensuring that the id fields are not nullable, and generally ensuring that the data is ready for mart.
 - The mart is the final tables ready for front-end users, the fields are organized and distributed according to the star schema and the time table is created for easier time analysis of the dataset.
 ---
@@ -517,14 +518,19 @@ We designed our dashboards to align with each stakeholder and their business que
 Instacart’s sales are driven by **frequent, routine purchases** of fresh produce and essentials.  
 Focusing on **operational efficiency**, **smart restocking**, and **targeted marketing** will sustain growth and improve customer retention.
 
-
 ---
 
 ## 🔑 Key Learnings
 
 ### Technical Learnings
+- Data Quality checks and dashboarding
+- Time dimension table creation using concatenated field values
+- Boolean conversion
 
 ### Team Learnings
+- New team dynamics on bigger time constraint
+- Collaboration on decision tradeoffs
+- Documentation
 
 ### Real-World Connection
 - Our work focused on **dbt modeling, data normalization, quality checks, and building marts** for the Instacart dataset
@@ -535,6 +541,8 @@ Focusing on **operational efficiency**, **smart restocking**, and **targeted mar
 ## 🚀 Future Improvements
 
 ### Next Steps
+- Automate ingestion and dashboard since an online grocery system
+- Generalize dataset for similar online services
 
 ### Generalization
 The dbt and mart workflow can be applied to any domain with **sequential or event-driven data**, such as:  
