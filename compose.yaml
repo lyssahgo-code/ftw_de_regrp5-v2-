@@ -37,18 +37,18 @@ services:
 
   clickhouse:
     image: clickhouse/clickhouse-server:23.12
+    restart: unless-stopped
     # platform: linux/amd64    # ← uncomment on Apple Silicon ONLY if you hit arch errors
-    container_name: clickhouse_personal
+    container_name: clickhouse
     ports:
+      # LOCAL: exposes to your laptop
+      # SERVER: keep as-is; students will reach the server's public IP on 8123/9000
       - "8123:8123"   # HTTP (used by Metabase / curl)
       - "9000:9000"   # Native TCP (used by drivers / dlt)
     volumes:
-      - ./dlt:/var/dlt
-      - ./dlt/extract-loads/staging:/app/data
-      - ./dlt/extract-loads/staging/g1_oulad:/app/data/g1_oulad
-      - ./dlt/extract-loads/staging/oulad_test1:/app/data/oulad_test1
-      - ./.dlt/secrets.toml:/var/dlt/.dlt/secrets.toml:ro
-      
+      - clickhouse_data:/var/lib/clickhouse
+      - ./clickhouse/users.d/ftw-de-bootcamp.xml:/etc/clickhouse-server/users.d/ftw_user.xml:ro
+      - ./clickhouse/initdb:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "clickhouse-client --query='SELECT 1' || exit 1"]
       interval: 10s
@@ -58,8 +58,9 @@ services:
 
   metabase:
     image: metabase/metabase:latest
-    # platform: linux/amd64
-    container_name: metabase_personal
+    restart: unless-stopped
+    # platform: linux/amd64    # ← uncomment on Apple Silicon ONLY if you hit arch errors
+    container_name: metabase
     ports:
       - "3001:3000"   # LOCAL: http://localhost:3001  •  SERVER: http://<server>:3001
     environment:
@@ -71,6 +72,10 @@ services:
         condition: service_healthy
     profiles: ["core"]
 
+  # External sample database (Chinook) used as a SOURCE.
+  # Intentionally NO host port to avoid conflicts; other containers reach it by name.
+
+ 
   chinook_fetch:
     image: alpine:3.20
     entrypoint: /bin/sh
@@ -90,16 +95,29 @@ services:
 
   postgres_chinook:
     image: postgres:14-alpine
-    container_name: chinook_postgres_personal
+    restart: unless-stopped
+    container_name: chinook_postgres
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: postgres        # 👈 connect here so DROP/CREATE chinook works
       POSTGRES_USER: chinook
       POSTGRES_PASSWORD: chinook
+    command:
+      - postgres
+      - -c
+      - max_connections=300        # was 100
+      - -c
+      - shared_buffers=512MB       # raise a bit with more conns
+      - -c
+      - work_mem=8MB               # modest per-connection
+      - -c
+      - effective_cache_size=1GB
     volumes:
       - chinook_init:/docker-entrypoint-initdb.d:ro
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+    # Public on host:5432 → container:5432
+    # If 5432 is busy on the host, use "65432:5432" instead.
+    - "5432:5432"
     depends_on:
       chinook_fetch:
         condition: service_completed_successfully
@@ -109,55 +127,65 @@ services:
       timeout: 3s
       retries: 10
     profiles: ["core"]
-
+ 
+  
   # ──────────────────────────────────────────────────────────
   # JOB-STYLE SERVICES (ephemeral; run with --profile jobs)
   # ──────────────────────────────────────────────────────────
 
   dlt:
     build: ./dlt
-    container_name: dlt_personal
+    container_name: dlt
     working_dir: /var/dlt
     volumes:
       - ./dlt:/var/dlt
-      - ./dlt/extract-loads/staging:/app/data
-      - ./dlt/extract-loads/staging/g1_oulad:/app/data/g1_oulad
-      - ./dlt/extract-loads/staging/oulad_test1:/app/data/oulad_test1
-      - ./.dlt/secrets.toml:/var/dlt/.dlt/secrets.toml:ro
     environment:
-      DESTINATION__CLICKHOUSE__CREDENTIALS__HOST:       "54.87.106.52"
+      # ── CLICKHOUSE DESTINATION (EDIT HERE for LOCAL vs REMOTE) ─────────────
+      # LOCAL (default): use the service name "clickhouse"
+      # REMOTE: set CH_HOST to your SERVER public IP or DNS (e.g., "34.12.34.56")
+      DESTINATION__CLICKHOUSE__CREDENTIALS__HOST:       "clickhouse" #"clickhouse"   # ← change to "54.87.106.52" for REMOTE
       DESTINATION__CLICKHOUSE__CREDENTIALS__PORT:       "9000"
       DESTINATION__CLICKHOUSE__CREDENTIALS__HTTP_PORT:  "8123"
-      DESTINATION__CLICKHOUSE__CREDENTIALS__USERNAME:   "ftw_user"
-      DESTINATION__CLICKHOUSE__CREDENTIALS__PASSWORD:   "ftw_pass"
+      DESTINATION__CLICKHOUSE__CREDENTIALS__USERNAME:   "ftw_user"     # ← teacher sets this on server
+      DESTINATION__CLICKHOUSE__CREDENTIALS__PASSWORD:   "ftw_pass"     # ← teacher sets this on server
       DESTINATION__CLICKHOUSE__CREDENTIALS__DATABASE:   "raw"
       DESTINATION__CLICKHOUSE__CREDENTIALS__SECURE:     "0"
+      # ───────────────────────────────────────────────────────────────────────
 
-      POSTGRES_HOST:     "54.87.106.52"
+      # Chinook Postgres SOURCE (internal-only; do not expose on host)
+      POSTGRES_HOST:     "chinook_postgres"
       POSTGRES_PORT:     "5432"
       POSTGRES_USER:     "chinook"
       POSTGRES_PASSWORD: "chinook"
-      POSTGRES_DB:       "chinook"
+      POSTGRES_DB:       "chinook" # this was created by load-chinook.sh
     restart: "no"
     profiles: ["jobs"]
 
   dbt:
     build: ./dbt
-    container_name: dbt_personal
+    container_name: dbt
     working_dir: /workdir
     volumes:
       - ./dbt:/workdir
+#      - ./dbt/profiles.yml:/root/.dbt/profiles.yml:ro
     environment:
+      # ── DBT TARGET & CLICKHOUSE CREDS (EDIT HERE for LOCAL vs REMOTE) ─────
+      # DBT_TARGET choices are defined in ./dbt/profiles.yml (e.g., local / remote).
+      # LOCAL default (service name):
+      # DBT_TARGET: "local"                     # ← set to "remote" when pointing to server
+      # CH_HOST: "54.87.106.52" # "clickhouse"                   # ← change to "54.87.106.52" for REMOTE
       CH_HTTP_PORT: "8123"
       CH_TCP_PORT:  "9000"
-      CH_USER: "ftw_user"
-      CH_PASS: "ftw_pass"
+      CH_USER: "ftw_user"                     # ← teacher sets this on server
+      CH_PASS: "ftw_pass"                     # ← teacher sets this on server
+      #DBT_SCHEMA: "default"                   # ← for REMOTE, use e.g. "ftw_<student_alias>"
+      # ───────────────────────────────────────────────────────────────────────
     command: dbt run
     restart: "no"
     profiles: ["jobs"]
 
 volumes:
-  clickhouse_data_personal:
+  clickhouse_data:
   metabase_data:
   chinook_init:
   pgdata:

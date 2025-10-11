@@ -2,66 +2,131 @@ version: 2
 
 models:
 
-  - name:                                #table name here
-    description: "Standardized _______ loaded from raw.raw___insta_aisles"
+  - name: regrp5_insta_aisles                               #table name here
+    description: "Standardized aisle info loaded from raw.raw___insta_aisles"
     columns:
-      - name:                            # column name here
+      - name: aisle_id                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          # use if column should only accept select values
+      - name: aisle                           # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+   
+
+  - name: regrp5_insta_departments                               #table name here
+    description: "Standardized department info loaded from raw.raw___departments"
+    columns:
+      - name: department_id                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+    # use if column should only accept select values     
+      - name: department                           # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+    # use if column should only accept select values   
+
+  - name: regrp5_insta_order_products_prior                               #table name here
+    description: "Standardized order products info loaded from raw.raw___insta_order_products_prior"
+    columns:
+      - name: order_id                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: product_id                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: add_to_cart_order                           # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: reordered                          # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+          - accepted_values
+              values: ['0','1']
+
+
+  - name: regrp5_insta_order_products_train                                #table name here
+    description: "Standardized order products info loaded from raw.raw___insta_order_products_train"
+    columns:
+      - name: order_id                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: product_id                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: add_to_cart_order                           # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: reordered                          # column name here
         description:                     # short description
         tests:                           # ex. not_null, accepted_values
           - not_null
           - accepted_values:
-              values: ['', '']           # use if column should only accept select values
+              values: ['0','1']
 
 
-  - name:                                #table name here
-    description: "Standardized _______ loaded from raw.raw___departments"
+  - name: regrp5_insta_orders                               #table name here
+    description: "Standardized order info loaded from raw.raw___insta_orders"
     columns:
-      - name:                            # column name here
+      - name: order_id                           # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: user_id                          # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: eval_set                          # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: order_number                          # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null
+      - name: order_dow                           # column name here
         description:                     # short description
         tests:                           # ex. not_null, accepted_values
           - not_null
           - accepted_values:
-              values: ['', '']           # use if column should only accept select values     
-
-
-  - name:                                #table name here
-    description: "Standardized _______ loaded from raw.raw___insta_order_products_prior"
-    columns:
-      - name:                            # column name here
+              values: ['0','1','2','3','4','5','6']
+      - name: order_hour_of_day                          # column name here
         description:                     # short description
         tests:                           # ex. not_null, accepted_values
           - not_null
-          - accepted_values:
-              values: ['', '']           # use if column should only accept select values
-
-
-  - name:                                #table name here
-    description: "Standardized _______ loaded from raw.raw___insta_order_products_train"
-    columns:
-      - name:                            # column name here
+      - name: days_since_prior_order                          # column name here
         description:                     # short description
         tests:                           # ex. not_null, accepted_values
           - not_null
-          - accepted_values:
-              values: ['', '']           # use if column should only accept select values        
 
 
-  - name:                                #table name here
-    description: "Standardized _______ loaded from raw.raw___insta_orders"
+  - name: regrp5_insta_products                                #table name here
+    description: "Standardized product info loaded from raw.raw___insta_products"
     columns:
-      - name:                            # column name here
+      - name: product_id                           # column name here
         description:                     # short description
         tests:                           # ex. not_null, accepted_values
           - not_null
-          - accepted_values:
-              values: ['', '']           # use if column should only accept select values
-
-  - name:                                #table name here
-    description: "Standardized _______ loaded from raw.raw___insta_products"
-    columns:
-      - name:                            # column name here
+      - name: product_name                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null          
+      - name: aisle_id                            # column name here
         description:                     # short description
         tests:                           # ex. not_null, accepted_values
           - not_null
-          - accepted_values:
-              values: ['', '']           # use if column should only accept select values
+      - name: department_id                            # column name here
+        description:                     # short description
+        tests:                           # ex. not_null, accepted_values
+          - not_null                    
