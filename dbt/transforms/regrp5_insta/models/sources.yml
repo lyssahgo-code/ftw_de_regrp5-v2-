@@ -11,3 +11,12 @@ sources:
       - name: raw___insta_orders
       - name: raw___insta_products
 
+  - name: clean
+    database: clean  
+    tables:
+      - name: regrp5_insta_aisle
+      - name: regrp5_insta_departments
+      - name: regrp5_insta_order_products_prior
+      - name: regrp5_insta_order_products_train
+      - name: regrp5_insta_orders
+      - name: regrp5_insta_products
