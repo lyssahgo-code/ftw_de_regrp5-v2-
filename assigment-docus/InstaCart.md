@@ -65,10 +65,9 @@ Transform the raw dataset into a dimensional star schema (fact and dimension tab
 - **Collaboration:** Git + GitHub
 
 ### Medallion Architecture
-- This exercise uses the same Medallion Architecture: the Raw → Clean → Mart table transformations.
-- The raw tables is the ingested dataset.
-- The clean tables are transformed from the clean tables through data typecasting, ensuring that the id fields are not nullable, and generally ensuring that the data is ready for mart.
-- The mart is the final tables ready for front-end users, the fields are organized and distributed according to the star schema and the time table is created for easier time analysis of the dataset.
+- **Bronze(Raw)** the ingested dataset.
+- **Silver(Clean)** transformed from the clean tables through data typecasting, ensuring that the id fields are not nullable, and generally ensuring that the data is ready for mart.
+- **Gold(Mart)** the final tables ready for front-end users, the fields are organized and distributed according to the star schema and the time table is created for easier time analysis of the dataset.
 ---
 
 ## 📊 Modelling Process
