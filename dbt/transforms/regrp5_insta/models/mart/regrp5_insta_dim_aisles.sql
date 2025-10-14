@@ -3,5 +3,5 @@
 select
   aisle_id as AisleKey,
   aisle
-from {{ source('clean', 'regrp5_insta_aisle') }}
+from {{ source('clean', 'regrp5_insta_aisles') }}
 ORDER BY aisle_id

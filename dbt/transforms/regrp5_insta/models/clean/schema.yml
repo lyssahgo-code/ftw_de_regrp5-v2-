@@ -2,131 +2,129 @@ version: 2
 
 models:
 
-  - name: regrp5_insta_aisles                               #table name here
+  - name: regrp5_insta_aisles                            
     description: "Standardized aisle info loaded from raw.raw___insta_aisles"
     columns:
-      - name: aisle_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: aisle_id                          
+        description: Unique identifier number for aisle                  
+        tests:                           
           - not_null
-          # use if column should only accept select values
-      - name: aisle                           # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: aisle                         
+        description: Product aisle or category name                   
+        tests:                           
           - not_null
    
 
-  - name: regrp5_insta_departments                               #table name here
+  - name: regrp5_insta_departments                              
     description: "Standardized department info loaded from raw.raw___departments"
     columns:
-      - name: department_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: department_id                          
+        description: Unique identifier number for department                    
+        tests:                         
           - not_null
-    # use if column should only accept select values     
-      - name: department                           # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: department                         
+        description: Department grouping related aisles                   
+        tests:                          
           - not_null
-    # use if column should only accept select values   
 
-  - name: regrp5_insta_order_products_prior                               #table name here
+
+  - name: regrp5_insta_order_products_prior                             
     description: "Standardized order products info loaded from raw.raw___insta_order_products_prior"
     columns:
-      - name: order_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: order_id                            
+        description: Unique identifier for customer order                     
+        tests:                         
           - not_null
-      - name: product_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: product_id                            
+        description: Unique identifier for product purchase                   
+        tests:                          
           - not_null
-      - name: add_to_cart_order                           # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: add_to_cart_order                           
+        description: Sequence in which they added to cart                     
+        tests:                          
           - not_null
-      - name: reordered                          # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
-          - not_null
-          - accepted_values
-              values: ['0','1']
-
-
-  - name: regrp5_insta_order_products_train                                #table name here
-    description: "Standardized order products info loaded from raw.raw___insta_order_products_train"
-    columns:
-      - name: order_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
-          - not_null
-      - name: product_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
-          - not_null
-      - name: add_to_cart_order                           # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
-          - not_null
-      - name: reordered                          # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: reordered                         
+        description: Flag if product was reordered                     
+        tests:                           
           - not_null
           - accepted_values:
               values: ['0','1']
 
 
-  - name: regrp5_insta_orders                               #table name here
+  - name: regrp5_insta_order_products_train                                
+    description: "Standardized order products info loaded from raw.raw___insta_order_products_train"
+    columns:
+      - name: order_id                           
+        description: Unique identifier for customer order                    
+        tests:                           
+          - not_null
+      - name: product_id                         
+        description: Unique identifier for product purchase                       
+        tests:                           
+          - not_null
+      - name: add_to_cart_order                           
+        description: Sequence in which they added to cart                     
+        tests:                           
+          - not_null
+      - name: reordered                       
+        description: Flag if product was reordered                     
+        tests:                           
+          - not_null
+          - accepted_values:
+              values: ['0','1']
+
+
+  - name: regrp5_insta_orders                              
     description: "Standardized order info loaded from raw.raw___insta_orders"
     columns:
-      - name: order_id                           # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: order_id                         
+        description: Unique identifier for customer order                     
+        tests:                           
           - not_null
-      - name: user_id                          # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: user_id                         
+        description: Unique identifier for customer                     
+        tests:                           
           - not_null
-      - name: eval_set                          # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: eval_set                         
+        description: Order type                 
+        tests:                          
           - not_null
-      - name: order_number                          # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: order_number                   
+        description: Sequence of order placed by user                    
+        tests:                          
           - not_null
-      - name: order_dow                           # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: order_dow                          
+        description: Day of the week the order was placed                     
+        tests:                          
           - not_null
           - accepted_values:
               values: ['0','1','2','3','4','5','6']
-      - name: order_hour_of_day                          # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: order_hour_of_day                          
+        description: Hour of the day when order was placed                  
+        tests:                           
           - not_null
-      - name: days_since_prior_order                          # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: days_since_prior_order                          
+        description: Days elapsed since customer's previous order                    
+        tests:                        
           - not_null
 
 
-  - name: regrp5_insta_products                                #table name here
+  - name: regrp5_insta_products                             
     description: "Standardized product info loaded from raw.raw___insta_products"
     columns:
-      - name: product_id                           # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: product_id                           
+        description: Unique identifier for product purchase                   
+        tests:                           
           - not_null
-      - name: product_name                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: product_name                            
+        description: Name of product                   
+        tests:                          
           - not_null          
-      - name: aisle_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: aisle_id                        
+        description: Product aisle or category name                    
+        tests:                           
           - not_null
-      - name: department_id                            # column name here
-        description:                     # short description
-        tests:                           # ex. not_null, accepted_values
+      - name: department_id                            
+        description: Unique identifier number for department                     
+        tests:                           
           - not_null                    

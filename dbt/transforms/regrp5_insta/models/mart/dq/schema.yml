@@ -1,0 +1,208 @@
+version: 2
+
+models:
+  - name: regrp5_dq_summary_insta_dim_aisles
+    description: "DQ KPIs derived from clean dim aisles model vs raw source"
+    columns:
+      - name: total_rows_raw
+        description: "Total rows in raw source table"
+      - name: total_rows_clean
+        description: "Total rows in clean model"
+      - name: dropped_rows
+        description: "raw minus clean (proxy for filtered rows)"
+      - name: pct_null_aisleid
+        description: "% of rows with NULL aisle id in clean"
+      - name: pct_null_aisle
+        description: "% of rows with NULL aisle in clean"        
+      - name: missing_aisle
+        description: "Rows where aisle in {'missing'}"
+      - name: non_positive_aisleid
+        description: "Rows where aisle id <=0"
+      - name: dq_run_ts
+        description: "Timestamp when the data quality check was executed"
+
+  - name: regrp5_dq_summary_insta_dim_departments
+    description: "DQ KPIs derived from clean dim departments model vs raw source"
+    columns:
+      - name: total_rows_raw
+        description: "Total rows in raw source table"
+      - name: total_rows_clean
+        description: "Total rows in clean model"
+      - name: dropped_rows
+        description: "raw minus clean (proxy for filtered rows)"
+      - name: pct_null_departmentid
+        description: "% of rows with NULL department id in clean"
+      - name: pct_null_department
+        description: "% of rows with NULL department in clean"        
+      - name: missing_departmeny
+        description: "Rows where department in {'missing'}"
+      - name: non_positive_departmentid
+        description: "Rows where department id <=0"
+      - name: dq_run_ts
+        description: "Timestamp when the data quality check was executed"
+
+  - name: regrp5_dq_summary_insta_dim_products
+    description: "DQ KPIs derived from clean dim products model vs raw source"
+    columns:
+      - name: total_rows_raw
+        description: "Total rows in raw source table"
+      - name: total_rows_clean
+        description: "Total rows in clean model"
+      - name: dropped_rows
+        description: "raw minus clean (proxy for filtered rows)"
+      - name: pct_null_product_id
+        description: "% of rows with NULL product id in clean"
+      - name: pct_null_product_name
+        description: "% of rows with NULL product name in clean"   
+      - name: pct_null_aisle_id
+        description: "% of rows with NULL aisle id in clean"
+      - name: pct_null_department_name
+        description: "% of rows with NULL department id in clean"                
+      - name: missing_product_name
+        description: "Rows where product in {'missing'}"
+      - name: non_positive_product_id
+        description: "Rows where product id <=0"
+      - name: non_positive_aisle_id
+        description: "Rows where aisle id <=0"        
+      - name: dq_run_ts
+        description: "Timestamp when the data quality check was executed"
+
+  - name: regrp5_dq_summary_insta_dim_time
+    description: "DQ KPIs derived from clean dim time model vs raw source"
+    columns:
+      - name: total_rows_raw
+        description: "Total rows in raw source table"
+      - name: total_rows_clean
+        description: "Total rows in clean model"
+      - name: dropped_rows
+        description: "raw minus clean (proxy for filtered rows)"
+      - name: pct_null_order_id
+        description: "% of rows with NULL order id in clean"
+      - name: pct_null_user_id
+        description: "% of rows with NULL user id in clean" 
+      - name: pct_null_eval_set
+        description: "% of rows with NULL eval set id in clean"
+      - name: pct_null_order_number
+        description: "% of rows with NULL order number in clean"  
+      - name: pct_null_order_dow
+        description: "% of rows with NULL order day of week in clean"
+      - name: pct_null_hour_of_day
+        description: "% of rows with NULL order hour of day in clean"  
+      - name: pct_null_prior_days
+        description: "% of rows with NULL days since prior order in clean"                             
+      - name: invalid_eval_set
+        description: "Rows where eval set not in {'prior','train','test'}"
+      - name: invalid_order_dow
+        description: "Rows where order day of week not in {0,1,2,3,4,5,6}"        
+      - name: non_positive_order_id
+        description: "Rows where order id <=0"
+      - name: non_positive_user_id
+        description: "Rows where user id <=0"
+      - name: non_positive_order_number
+        description: "Rows where order number <=0"
+      - name: out_of_range_order_hour
+        description: "Rows where order hour of day is < 0 and > 23"                        
+      - name: dq_run_ts
+        description: "Timestamp when the data quality check was executed"
+
+  - name: regrp5_dq_summary_insta_dim_users
+    description: "DQ KPIs derived from clean dim users model vs raw source"
+    columns:
+      - name: total_rows_raw
+        description: "Total rows in raw source table"
+      - name: total_rows_clean
+        description: "Total rows in clean model"
+      - name: dropped_rows
+        description: "raw minus clean (proxy for filtered rows)"
+      - name: pct_null_user_id
+        description: "% of rows with NULL user id in clean"     
+      - name: non_positive_aisleid
+        description: "Rows where user id <=0"
+      - name: dq_run_ts
+        description: "Timestamp when the data quality check was executed"
+
+  - name: regrp5_dq_summary_insta_fact_order_products
+    description: "DQ KPIs derived from clean fact order products model vs raw source"
+    columns:
+      - name: total_rows_raw
+        description: "Total rows in raw source table"
+      - name: total_rows_clean
+        description: "Total rows in clean model"
+      - name: dropped_rows
+        description: "raw minus clean (proxy for filtered rows)"
+      - name: pct_null_order_id
+        description: "% of rows with NULL order id in clean"
+      - name: pct_null_product_id
+        description: "% of rows with NULL product id in clean"
+      - name: pct_null_add_to_cart_order
+        description: "% of rows with NULL add to cart order in clean"                    
+      - name: invalid_reordered_flag
+        description: "Rows where reordered not in {0,1}"
+      - name: non_positive_order_id
+        description: "Rows where order id <=0"
+      - name: non_positive_product_id
+        description: "Rows where product id <=0"
+      - name: non_positive_add_to_cart_order
+        description: "Rows where add to cart order <=0"                
+      - name: dq_run_ts
+        description: "Timestamp when the data quality check was executed"
+
+  - name: regrp5_dq_summary_insta_fact_orders
+    description: "DQ KPIs derived from clean fact orders model vs raw source"
+    columns:
+      - name: total_rows_raw
+        description: "Total rows in raw source table"
+      - name: total_rows_clean
+        description: "Total rows in clean model"
+      - name: dropped_rows
+        description: "raw minus clean (proxy for filtered rows)"
+      - name: pct_null_order_id
+        description: "% of rows with NULL order id in clean"
+      - name: pct_null_user_id
+        description: "% of rows with NULL user id in clean" 
+      - name: pct_null_eval_set
+        description: "% of rows with NULL eval set id in clean"
+      - name: pct_null_order_number
+        description: "% of rows with NULL order number in clean"  
+      - name: pct_null_order_dow
+        description: "% of rows with NULL order day of week in clean"
+      - name: pct_null_hour_of_day
+        description: "% of rows with NULL order hour of day in clean"  
+      - name: pct_null_prior_days
+        description: "% of rows with NULL days since prior order in clean"                             
+      - name: invalid_eval_set
+        description: "Rows where eval set not in {'prior','train','test'}"
+      - name: invalid_order_dow
+        description: "Rows where order day of week not in {0,1,2,3,4,5,6}"        
+      - name: non_positive_order_id
+        description: "Rows where order id <=0"
+      - name: non_positive_user_id
+        description: "Rows where user id <=0"
+      - name: non_positive_order_number
+        description: "Rows where order number <=0"
+      - name: out_of_range_order_hour
+        description: "Rows where order hour of day is < 0 and > 23"                        
+      - name: dq_run_ts
+        description: "Timestamp when the data quality check was executed"       
+
+
+  - name: regrp5_dq_anomalies_insta_dim_aisles
+    description: "Row-level drilldown of records violating simple DQ rules."
+
+  - name: regrp5_dq_anomalies_insta_dim_departments
+    description: "Row-level drilldown of records violating simple DQ rules."
+
+  - name: regrp5_dq_anomalies_insta_dim_products
+    description: "Row-level drilldown of records violating simple DQ rules."
+
+  - name: regrp5_dq_anomalies_insta_dim_time
+    description: "Row-level drilldown of records violating simple DQ rules."
+
+  - name: regrp5_dq_anomalies_insta_dim_users
+    description: "Row-level drilldown of records violating simple DQ rules."
+
+  - name: regrp5_dq_anomalies_insta_fact_order_products
+    description: "Row-level drilldown of records violating simple DQ rules."
+
+  - name: regrp5_dq_anomalies_insta_fact_orders
+    description: "Row-level drilldown of records violating simple DQ rules."
