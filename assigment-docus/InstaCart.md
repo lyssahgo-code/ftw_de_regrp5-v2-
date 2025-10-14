@@ -1,5 +1,8 @@
 <div align="center">
+	
+<img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/e296e7f1-da9d-4794-a13c-a1644911d020" />
 
+	
 # Instacart Market Basket Analysis
 
 ## Re: Group 5
@@ -40,7 +43,7 @@
 This project uses the **Instacart Market Basket Analysis**, which contains anonymized information on over 3 million orders from 200,000+ users
 
 ### Dataset Used
-Online grocery dataset (**InstaCart**)
+[Online grocery dataset (**InstaCart**)](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis)
 
 ### Goal of the Exercise
 Transform the raw dataset into a dimensional star schema (fact and dimension tables) for analytics, implement data quality checks, and explore insights with Metabase dashboards
@@ -68,6 +71,7 @@ Transform the raw dataset into a dimensional star schema (fact and dimension tab
 - **Bronze(Raw)** - the ingested dataset.
 - **Silver(Clean)** - transformed from the clean tables through data typecasting, ensuring that the id fields are not nullable, and generally ensuring that the data is ready for mart.
 - **Gold(Mart)** - the final tables ready for front-end users, the fields are organized and distributed according to the star schema and the time table is created for easier time analysis of the dataset.
+  
 ---
 
 ## 📊 Modelling Process
@@ -276,6 +280,118 @@ erDiagram
 
 ---
 
+## :shield: Data Quality Checks
+In addition to modeling, we implemented data quality checks for our key tables to ensure the analytics layer is reliable and actionable
+If data is *missing*, *invalid*, or *out-of-range*, the **DQ checks** flag these issues and make them visible. The DQ views help summarize the current state of the data at a glance
+
+## What We Did:
+### 1. Added schema tests such as `not_null` and `accepted_values` for our tables
+> First-level checks to ensure columns are not empty and adhere to expected categorical values
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/64f70969-44ed-4e86-acb9-2c58d2614bf7" />
+
+### 2. Created **DQ summary views** to:
+- Compare raw vs clean rows
+- Count dropped rows
+- Count nulls, invalid domain values, and out-of-range values
+- Join these metrics for a summarized view
+- **Sample view:**
+```bash
+{{ config(materialized="view", schema="mart") }}
+
+with src as (
+  select * from {{ source('raw','raw___insta_aisles') }}
+),
+cln as (
+  select * from {{ ref('regrp5_insta_aisles') }}
+),
+
+counts as (
+  select
+    (select count() from src)  as row_count_raw,
+    (select count() from cln)  as row_count_clean
+),
+nulls as (
+  select
+    round(100.0 * countIf(aisle_id is null) / nullif(count(),0), 2) as pct_null_aisleid,
+    round(100.0 * countIf(aisle is null) / nullif(count(),0), 2) as pct_null_aisle
+  from cln
+),
+domains as (
+  select
+    countIf(aisle in ('missing')) as missing_aisle
+  from cln
+),
+bounds as (
+  select
+    countIf(aisle_id <= 0) as nonpositive_aisleid
+  from cln
+),
+joined as (
+  select
+    counts.row_count_raw as total_rows_raw,
+    counts.row_count_clean as total_rows_clean,
+    (counts.row_count_raw - counts.row_count_clean) as dropped_rows,
+    nulls.pct_null_aisleid,
+    nulls.pct_null_aisle,
+    domains.missing_aisle,
+    bounds.nonpositive_aisleid,
+    now() as dq_run_ts
+  from counts
+  cross join nulls
+  cross join domains
+  cross join bounds
+)
+
+select * from joined
+```
+    
+### 3. Created **DQ anomalies views** to:
+- Drill down per row on data failing tests or rules
+- **Sample view:**
+```bash
+{{ config(materialized="view", schema="mart") }}
+
+
+with cln as (
+  select * from {{ ref('regrp5_insta_aisles') }}
+),
+
+violations as (
+  select
+    aisle_id,
+    aisle,
+    multiIf(
+      aisle_id <= 0,         'nonpositive_aisle_id',
+      aisle in ['missing'],  'missing_aisle',
+      aisle_id is null,      'null_aisle_id',
+      aisle is null,         'null_aisle',
+      'ok'
+    ) as dq_issue
+  from cln
+)
+select *
+from violations
+where dq_issue != 'ok'
+```
+
+### 4. Documented schema for DQ views
+- Quick overview on columns, descriptions and DQ metrics
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/5bf0f501-623a-4015-a3d3-c25b4d0c4839" />
+
+
+### 5. Used `dbt build` to materialize all models
+- Materialized clean models (standardized raw data), mart models (fact/dim star schema), and DQ models
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/ea0db782-89e8-47c8-9f8a-b1c5a92c3b1a" />
+
+
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/deeae6a0-ef16-4310-a564-20eb0448eaf8" />
+
+### Tables Covered:
+- Dimensions: `dim_aisles`, `dim_departments`, `dim_products`, `dim_time`, `dim_users`
+- Facts: `fact_orders`, `fact_order_products`
+
+---
+
 ## 🧑‍💻 Sample Queries
 
 **1. Orders by Day and Time Of Day**
@@ -464,6 +580,11 @@ We designed our dashboards to align with each stakeholder and their business que
 <img width="1375" height="650" alt="image" src="https://github.com/user-attachments/assets/341ee58c-03a9-420e-adad-c5a2a3f3dcea" />
 
 <img width="1109" height="815" alt="image" src="https://github.com/user-attachments/assets/fdcf36d0-d5d9-4207-900e-3c2eed256cea" />
+
+### 📊 Data Quality
+> To monitor datasets' health, identify anomalies and ensure reliable insights for decision-making
+<img width="1153" height="868" alt="image" src="https://github.com/user-attachments/assets/67ad4d68-209f-490b-8c9a-541891c224fc" />
+
 
 
 ### Key Insights
